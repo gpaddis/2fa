@@ -1,5 +1,6 @@
 #!/bin/bash
- 
+# Encrypt and decrypt 2fa secret keys and generate auth codes in the console.
+
 set -e
 
 mode="$1"
