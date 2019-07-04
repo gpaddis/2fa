@@ -21,7 +21,7 @@ if [[ $mode == "add" ]]; then
         exit 1
     fi
 
-    echo $secret | gpg -r $recipient --output $HOME/.2fa/$serviceName -e
+    echo $secret | gpg2 -r $recipient --output $HOME/.2fa/$serviceName -e
     [ "$?" == 0 ] && echo "The encrypted 2fa secret was saved in $HOME/.2fa/$serviceName."
 fi
 
@@ -37,7 +37,7 @@ if [[ $mode == "code" ]]; then
         exit 1
     fi
 
-    secret="$(gpg --quiet -o- $HOME/.2fa/$serviceName)"
+    secret="$(gpg2 --quiet -o- $HOME/.2fa/$serviceName)"
     oathtool --base32 --totp $secret | xclip -sel c
     echo "The 2fa code was copied to the clipboard."
 fi
