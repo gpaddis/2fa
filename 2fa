@@ -4,9 +4,24 @@
 set -e
 
 mode="$1"
-serviceName="$2" 
-recipient="$3" 
+serviceName="$2"
+recipient="$3"
 secret="$4"
+
+isInstalled() {
+    _command="$1"
+    [ -x "$(command -v $_command)" ]
+}
+
+if isInstalled gpg2; then
+    gpg="gpg2"
+elif isInstalled gpg; then
+    gpg="gpg"
+else
+    echo "GPG is not installed."
+    exit 1
+fi
+
 
 if [[ "$#" -lt 2 || $mode == "--help" ]]; then
     echo "Usage: $0 MODE SERVICE_NAME [RECIPIENT] [SECRET]"
@@ -21,7 +36,7 @@ if [[ $mode == "add" ]]; then
         exit 1
     fi
 
-    echo $secret | gpg2 -r $recipient --output $HOME/.2fa/$serviceName -e
+    echo $secret | $gpg -r $recipient --output $HOME/.2fa/$serviceName -e
     [ "$?" == 0 ] && echo "The encrypted 2fa secret was saved in $HOME/.2fa/$serviceName."
 fi
 
@@ -37,7 +52,6 @@ if [[ $mode == "code" ]]; then
         exit 1
     fi
 
-    secret="$(gpg2 --quiet -o- $HOME/.2fa/$serviceName)"
-    oathtool --base32 --totp $secret | xclip -sel c
-    echo "The 2fa code was copied to the clipboard."
+    secret="$($gpg --quiet -o- $HOME/.2fa/$serviceName)"
+    echo "The 2fa code is $(oathtool --base32 --totp $secret)"
 fi
