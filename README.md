@@ -11,7 +11,7 @@ To decrypt a secret:
 ```
 ./2fa code testing
 
-The 2fa code was copied to the clipboard.
+2fa code (testing): 123456
 ```
 The 2fa code is now available in your system clipboard.
 
