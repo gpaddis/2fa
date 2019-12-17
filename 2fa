@@ -53,5 +53,5 @@ if [[ $mode == "code" ]]; then
     fi
 
     secret="$($gpg --quiet -o- $HOME/.2fa/$serviceName)"
-    echo "The 2fa code is $(oathtool --base32 --totp $secret)"
+    echo "2fa code ($serviceName): $(oathtool --base32 --totp $secret)"
 fi
