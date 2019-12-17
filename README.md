@@ -13,7 +13,7 @@ To decrypt a secret:
 
 2fa code (testing): 123456
 ```
-The 2fa code is now available in your system clipboard.
+The 2fa code is printed on screen.
 
 ## Inspiration
 2fa tutorial: https://etherarp.net/google-authenticator-without-a-phone/
